@@ -83,6 +83,88 @@ function PreviewSvg({ geometryKey, color }) {
     );
   }
 
+  if (
+    geometryKey?.startsWith('shawarma-') ||
+    geometryKey?.startsWith('grill-') ||
+    geometryKey?.startsWith('spit-') ||
+    geometryKey?.startsWith('counter-') ||
+    geometryKey?.startsWith('cold-counter-') ||
+    geometryKey?.startsWith('cash-') ||
+    geometryKey?.startsWith('hood-') ||
+    geometryKey?.startsWith('service-shelf-') ||
+    geometryKey?.startsWith('terminal-') ||
+    geometryKey?.startsWith('fridge-under-') ||
+    geometryKey?.startsWith('handwash-')
+  ) {
+    return (
+      <svg viewBox="0 0 160 90" className="item-variant-svg" aria-hidden="true">
+        {(geometryKey?.startsWith('counter-') || geometryKey?.startsWith('cold-counter-') || geometryKey?.startsWith('cash-')) && (
+          <>
+            <rect x="22" y="34" width="116" height="28" rx="8" fill={fill} />
+            <rect x="26" y="26" width="108" height="10" rx="5" fill={accent} stroke={stroke} />
+          </>
+        )}
+        {geometryKey?.startsWith('cold-counter-') && <rect x="34" y="40" width="40" height="14" rx="4" fill={accent} stroke={stroke} />}
+        {geometryKey?.startsWith('cash-') && <rect x="92" y="24" width="18" height="14" rx="4" fill={accent} stroke={stroke} />}
+        {geometryKey?.startsWith('shawarma-') && (
+          <>
+            <rect x="34" y="26" width="52" height="38" rx="10" fill={fill} />
+            <rect x="94" y="22" width="10" height="44" rx="5" fill={accent} stroke={stroke} />
+            <circle cx="99" cy="30" r="5" fill={fill} />
+          </>
+        )}
+        {geometryKey?.startsWith('grill-') && (
+          <>
+            <rect x="30" y="34" width="100" height="24" rx="8" fill={fill} />
+            <line x1="46" y1="42" x2="114" y2="42" stroke={accent} strokeWidth="4" strokeLinecap="round" />
+            <line x1="46" y1="50" x2="114" y2="50" stroke={accent} strokeWidth="4" strokeLinecap="round" />
+          </>
+        )}
+        {geometryKey?.startsWith('spit-') && (
+          <>
+            <rect x="52" y="58" width="56" height="8" rx="4" fill={fill} />
+            <rect x="76" y="20" width="8" height="40" rx="4" fill={accent} stroke={stroke} />
+            <circle cx="80" cy="34" r="9" fill={fill} />
+          </>
+        )}
+        {geometryKey?.startsWith('hood-') && (
+          <>
+            <path d="M34 52 L52 28 H108 L126 52 Z" fill={fill} />
+            <rect x="70" y="18" width="20" height="14" rx="4" fill={accent} stroke={stroke} />
+          </>
+        )}
+        {geometryKey?.startsWith('service-shelf-') && (
+          <>
+            <rect x="42" y="18" width="10" height="54" rx="4" fill={fill} />
+            <rect x="108" y="18" width="10" height="54" rx="4" fill={fill} />
+            <rect x="42" y="26" width="76" height="8" rx="4" fill={accent} stroke={stroke} />
+            <rect x="42" y="44" width="76" height="8" rx="4" fill={accent} stroke={stroke} />
+            <rect x="42" y="62" width="76" height="8" rx="4" fill={accent} stroke={stroke} />
+          </>
+        )}
+        {geometryKey?.startsWith('terminal-') && (
+          <>
+            <rect x="66" y="20" width="28" height="20" rx="6" fill={fill} />
+            <rect x="76" y="40" width="8" height="20" rx="4" fill={accent} stroke={stroke} />
+            <rect x="62" y="60" width="36" height="8" rx="4" fill={fill} />
+          </>
+        )}
+        {geometryKey?.startsWith('fridge-under-') && (
+          <>
+            <rect x="28" y="32" width="104" height="30" rx="8" fill={fill} />
+            <rect x="77" y="38" width="4" height="18" rx="2" fill={accent} />
+          </>
+        )}
+        {geometryKey?.startsWith('handwash-') && (
+          <>
+            <rect x="44" y="34" width="72" height="26" rx="8" fill={fill} />
+            <rect x="58" y="22" width="44" height="14" rx="7" fill={accent} stroke={stroke} />
+          </>
+        )}
+      </svg>
+    );
+  }
+
   if (geometryKey?.startsWith('cabinet-') || geometryKey?.startsWith('wardrobe-') || geometryKey?.startsWith('shelf-') || geometryKey?.startsWith('appliance-')) {
     return (
       <svg viewBox="0 0 120 90" className="item-variant-svg" aria-hidden="true">

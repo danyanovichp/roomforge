@@ -26,6 +26,116 @@ export const PROPERTY_TYPES = [
   { id: 'house', label: 'House' },
 ];
 
+export const BUSINESS_PROFILES = [
+  {
+    id: 'office',
+    label: 'Сервисный офис',
+    description: 'Подходит для агентств, консультационных команд и офисов с клиентским потоком, где нужны рабочие места, переговорные и сервисные зоны.',
+    operatingHours: 9,
+    setupHoursPerDay: 10,
+    targetWorkRatio: 58,
+    targetEquipmentDensity: 32,
+    requiredZones: ['work', 'client', 'storage'],
+    starterCatalogIds: ['desk', 'office-chair', 'monitor', 'bookshelf', 'cabinet', 'ceiling-light'],
+    defaultTasks: [
+      { title: 'Подготовить зонирование рабочих мест', hours: 6, owner: 'Основатель', notes: 'Разделите помещение на клиентскую, рабочую и складскую зоны.' },
+      { title: 'Установить столы и кресла', hours: 8, owner: 'Монтажная команда', notes: 'Сохраните удобные проходы между рабочими местами.' },
+      { title: 'Подключить электрику, интернет и мониторы', hours: 5, owner: 'IT', notes: 'Проверьте все рабочие точки до запуска.' },
+      { title: 'Настроить ресепшен и хранение', hours: 4, owner: 'Операционный менеджер', notes: 'Определите маршрут посетителей, документов и расходников.' },
+    ],
+  },
+  {
+    id: 'retail',
+    label: 'Шоурум',
+    description: 'Сценарий для торгового зала, где важны выкладка товара, запас хранения и свободное движение клиентов.',
+    operatingHours: 11,
+    setupHoursPerDay: 9,
+    targetWorkRatio: 52,
+    targetEquipmentDensity: 36,
+    requiredZones: ['client', 'storage', 'support'],
+    starterCatalogIds: ['shelving-unit', 'display-cabinet', 'cabinet', 'console-table', 'mirror', 'ceiling-light'],
+    defaultTasks: [
+      { title: 'Определить маршрут покупателя', hours: 5, owner: 'Основатель', notes: 'Выделите основной путь и точки импульсной выкладки.' },
+      { title: 'Собрать стеллажи и витрины', hours: 9, owner: 'Монтажная команда', notes: 'Оставьте проходы свободными для движения клиентов.' },
+      { title: 'Организовать склад и запас', hours: 4, owner: 'Операционный менеджер', notes: 'Разделите ходовой товар и резервный остаток.' },
+      { title: 'Проверить процесс оплаты и выдачи', hours: 3, owner: 'Руководитель продаж', notes: 'Сделайте путь клиента от выбора до выдачи простым и повторяемым.' },
+    ],
+  },
+  {
+    id: 'cafe',
+    label: 'Кафе',
+    description: 'Помогает сбалансировать подготовку, посадку гостей и скорость выдачи, чтобы зал и кухня работали без пересечений.',
+    operatingHours: 12,
+    setupHoursPerDay: 11,
+    targetWorkRatio: 62,
+    targetEquipmentDensity: 40,
+    requiredZones: ['prep', 'client', 'support', 'storage'],
+    starterCatalogIds: ['bar-counter', 'kitchen-island', 'refrigerator', 'dining-table', 'bar-stool', 'kitchen-sink'],
+    defaultTasks: [
+      { title: 'Разметить зоны готовки, ожидания и выдачи', hours: 6, owner: 'Основатель', notes: 'Исключите пересечение гостевого и кухонного потоков.' },
+      { title: 'Установить кухонное и сервисное оборудование', hours: 10, owner: 'Монтажная команда', notes: 'Ставьте рабочие поверхности рядом с холодным хранением.' },
+      { title: 'Настроить посадку и ожидание', hours: 5, owner: 'Фронт-офис', notes: 'Оставьте понятный путь к стойке и зоне выдачи.' },
+      { title: 'Провести репетицию открытия', hours: 4, owner: 'Старший смены', notes: 'Измерьте полный цикл заказа от подготовки до выдачи.' },
+    ],
+  },
+  {
+    id: 'salon',
+    label: 'Салон',
+    description: 'Сценарий для бьюти- и сервисных студий с рабочими постами, зеркалами, ожиданием клиентов и сервисным хранением.',
+    operatingHours: 10,
+    setupHoursPerDay: 9,
+    targetWorkRatio: 60,
+    targetEquipmentDensity: 34,
+    requiredZones: ['work', 'client', 'storage', 'support'],
+    starterCatalogIds: ['mirror', 'office-chair', 'cabinet', 'side-cabinet', 'floor-lamp', 'desk'],
+    defaultTasks: [
+      { title: 'Разнести рабочие посты и зеркала', hours: 5, owner: 'Основатель', notes: 'У каждого поста должен быть удобный радиус движения.' },
+      { title: 'Поставить сервисное хранение и коммуникации', hours: 6, owner: 'Операционный менеджер', notes: 'Повседневные расходники держите рядом с активными постами.' },
+      { title: 'Настроить ожидание и расчет клиентов', hours: 4, owner: 'Администратор', notes: 'Фронт-зона должна оставаться понятной и свободной.' },
+      { title: 'Описать цикл работы поста', hours: 3, owner: 'Старший смены', notes: 'Зафиксируйте порядок подготовки и перезапуска каждого места.' },
+    ],
+  },
+  {
+    id: 'shawarma',
+    label: 'Шаурма',
+    description: 'Сценарий для точки шаурмы с горячей линией, зоной сборки, выдачей заказов и проверкой того, насколько пространство поддерживает быстрый поток.',
+    operatingHours: 14,
+    setupHoursPerDay: 12,
+    targetWorkRatio: 68,
+    targetEquipmentDensity: 42,
+    requiredZones: ['prep', 'client', 'storage', 'support'],
+    starterCatalogIds: [
+      'shawarma-grill',
+      'grill-station',
+      'vertical-spit',
+      'prep-counter',
+      'refrigerated-counter',
+      'undercounter-fridge',
+      'cash-desk',
+      'contactless-terminal',
+      'exhaust-hood',
+      'handwash-sink',
+      'sauce-station',
+      'packing-shelf',
+    ],
+    defaultTasks: [
+      { title: 'Разделить горячую линию, сборку и выдачу', hours: 6, owner: 'Основатель', notes: 'Гость не должен пересекаться с горячей зоной и подготовкой.' },
+      { title: 'Установить аппарат шаурмы, гриль и вытяжку', hours: 8, owner: 'Техник', notes: 'Соберите горячий контур как одну компактную линию.' },
+      { title: 'Собрать холодный стол и соусную станцию', hours: 5, owner: 'Монтажная команда', notes: 'Держите ингредиенты и соусы на расстоянии одного шага от сборки.' },
+      { title: 'Настроить кассу и выдачу заказов', hours: 4, owner: 'Администратор', notes: 'Проверьте, что очередь не блокирует вход и сервисный проход.' },
+      { title: 'Проверить мойку рук и санитарный маршрут', hours: 3, owner: 'Операционный менеджер', notes: 'Сотрудник должен попадать к мойке без обхода клиентской зоны.' },
+    ],
+  },
+];
+
+export const BUSINESS_ROOM_USE_OPTIONS = [
+  { id: 'work', label: 'Рабочая зона' },
+  { id: 'client', label: 'Клиентская зона' },
+  { id: 'prep', label: 'Подготовка / горячая линия' },
+  { id: 'storage', label: 'Хранение' },
+  { id: 'support', label: 'Поддержка / сервис' },
+];
+
 export const STYLE_PRESETS = [
   {
     id: 'minimal',
@@ -316,9 +426,28 @@ const CATEGORY_DEFINITIONS = [
   },
   {
     id: 'office',
-    label: 'Office',
+    label: 'Офис',
     roomTypes: ['office'],
     items: ['Desk', 'Office Chair', 'Monitor', 'Computer', 'Keyboard', 'Mouse', 'Bookshelf', 'Notice Board'],
+  },
+  {
+    id: 'food-service',
+    label: 'Фуд-сервис',
+    roomTypes: ['kitchen', 'kitchen-living-room', 'dining', 'office', 'entryway'],
+    items: [
+      'Shawarma Grill',
+      'Grill Station',
+      'Vertical Spit',
+      'Prep Counter',
+      'Refrigerated Counter',
+      'Undercounter Fridge',
+      'Exhaust Hood',
+      'Cash Desk',
+      'Contactless Terminal',
+      'Handwash Sink',
+      'Sauce Station',
+      'Packing Shelf',
+    ],
   },
   {
     id: 'balcony',
@@ -362,6 +491,30 @@ const CATEGORY_DEFINITIONS = [
     roomTypes: ['living-room', 'bedroom', 'kitchen', 'dining', 'entryway', 'bathroom', 'office'],
     items: ['Door', 'Window', 'Stair', 'Molding', 'Baseboard', 'Cornice', 'Decorative Brick Panel', 'Switch Panel'],
   },
+  {
+    id: 'fitness',
+    label: 'Fitness',
+    roomTypes: ['living-room', 'bedroom', 'office', 'balcony'],
+    items: ['Treadmill', 'Exercise Bike', 'Dumbbells', 'Yoga Mat', 'Weight Bench', 'Pull-Up Bar', 'Resistance Bands', 'Fitness Ball'],
+  },
+  {
+    id: 'hobbies',
+    label: 'Hobbies',
+    roomTypes: ['living-room', 'bedroom', 'office'],
+    items: ['Easel', 'Sewing Machine', 'Guitar', 'Piano', 'Keyboard Instrument', 'Drum Set', 'Art Supply Cabinet', 'Craft Table'],
+  },
+  {
+    id: 'unique',
+    label: 'Unique Elements',
+    roomTypes: ['living-room', 'bedroom', 'bathroom'],
+    items: ['Aquarium', 'Fireplace', 'Fountain', 'Round Bed', 'Hammock', 'Swing Chair', 'Bonsai Tree', 'Terrarium'],
+  },
+  {
+    id: 'kids',
+    label: 'Kids Room',
+    roomTypes: ['bedroom'],
+    items: ['Crib', 'Changing Table', 'High Chair', 'Toy Chest', 'Kids Bookshelf', 'Kids Desk', 'Kids Chair', 'Bunk Bed'],
+  },
 ];
 
 const FAMILY_SPECS = {
@@ -398,6 +551,18 @@ const FAMILY_SPECS = {
   dishwasher: { family: 'appliance', size: [0.6, 0.85, 0.62], description: 'Integrated kitchen appliance.' },
   hood: { family: 'wall-decor', size: [0.9, 0.7, 0.48], description: 'Kitchen hood element.' },
   island: { family: 'cabinet', size: [1.8, 0.92, 0.9], description: 'Freestanding kitchen island.' },
+  shawarma: { family: 'shawarma', size: [0.9, 2.05, 0.95], description: 'Vertical shawarma grill with protected hot zone.' },
+  grill: { family: 'grill', size: [1.15, 1.05, 0.78], description: 'Hot grill station for quick finishing and toasting.' },
+  spit: { family: 'spit', size: [0.58, 1.9, 0.58], description: 'Additional vertical spit or reserve roasting stand.' },
+  prepcounter: { family: 'service-counter', size: [1.7, 0.94, 0.78], description: 'Main prep counter for assembly and wrap finishing.' },
+  coldcounter: { family: 'cold-counter', size: [1.7, 0.94, 0.82], description: 'Refrigerated counter for proteins, vegetables, and mise en place.' },
+  undercounterfridge: { family: 'undercounter', size: [1.2, 0.9, 0.74], description: 'Undercounter cold storage next to the work line.' },
+  cashdesk: { family: 'cash-desk', size: [1.2, 1.05, 0.74], description: 'Compact cashier counter for payment and order handoff.' },
+  terminal: { family: 'terminal', size: [0.34, 0.48, 0.24], description: 'Contactless payment terminal on a compact stand.' },
+  handsink: { family: 'handwash', size: [0.62, 0.94, 0.48], description: 'Dedicated handwash station for the service team.' },
+  saucestation: { family: 'service-counter', size: [1.1, 1.02, 0.56], description: 'Compact condiment and sauce station.' },
+  packingshelf: { family: 'service-shelf', size: [1.2, 1.85, 0.42], description: 'Open shelf for bags, packaging, and issued orders.' },
+  exhaust: { family: 'hood', size: [1.5, 0.78, 0.82], description: 'Exhaust hood for the hot line.' },
   plant: { family: 'plant', size: [0.55, 1.35, 0.55], description: 'Decorative indoor plant.' },
   rug: { family: 'rug', size: [2.3, 0.03, 1.6], description: 'Textile floor layer that defines a zone.' },
   curtain: { family: 'textile', size: [2.2, 2.6, 0.08], description: 'Window textile treatment.' },
@@ -407,6 +572,38 @@ const FAMILY_SPECS = {
   fan: { family: 'appliance', size: [0.48, 1.2, 0.48], description: 'Portable air circulation appliance.' },
   humidifier: { family: 'appliance', size: [0.35, 0.48, 0.35], description: 'Compact air moisture appliance.' },
   stair: { family: 'stair', size: [2.5, 2.8, 1], description: 'Vertical circulation element for houses.' },
+  treadmill: { family: 'fitness', size: [1.8, 1.5, 0.75], description: 'Running machine for indoor cardio workouts.' },
+  bike: { family: 'fitness', size: [1.2, 1.3, 0.55], description: 'Stationary exercise bike for cardio.' },
+  dumbbells: { family: 'fitness', size: [0.5, 0.35, 0.5], description: 'Weight set for strength training.' },
+  yoga: { family: 'fitness', size: [1.8, 0.02, 0.6], description: 'Exercise mat for yoga and stretching.' },
+  bench: { family: 'fitness', size: [1.4, 0.5, 0.45], description: 'Weight bench for strength exercises.' },
+  pullup: { family: 'fitness', size: [1.2, 2.2, 0.08], description: 'Wall-mounted pull-up bar.' },
+  bands: { family: 'fitness', size: [0.4, 0.15, 0.4], description: 'Resistance bands storage container.' },
+  ball: { family: 'fitness', size: [0.6, 0.6, 0.6], description: 'Exercise ball for core workouts.' },
+  easel: { family: 'hobby', size: [0.7, 1.6, 0.55], description: 'Artist easel for painting and display.' },
+  sewing: { family: 'hobby', size: [0.6, 0.9, 0.45], description: 'Sewing machine for fabric work.' },
+  guitar: { family: 'hobby', size: [0.4, 1.0, 0.15], description: 'Musical instrument wall mount.' },
+  piano: { family: 'hobby', size: [1.5, 1.0, 0.55], description: 'Digital piano or keyboard stand.' },
+  keyboard: { family: 'hobby', size: [1.3, 0.85, 0.35], description: 'Musical keyboard with stand.' },
+  drums: { family: 'hobby', size: [1.6, 1.1, 1.2], description: 'Drum set for musical practice.' },
+  artcabinet: { family: 'hobby', size: [1.2, 1.4, 0.45], description: 'Art supply storage cabinet.' },
+  crafttable: { family: 'hobby', size: [1.4, 0.75, 0.7], description: 'Craft and hobby work table.' },
+  aquarium: { family: 'decor', size: [1.5, 1.2, 0.5], description: 'Fish tank or aquarium enclosure.' },
+  fireplace: { family: 'decor', size: [1.2, 1.0, 0.5], description: 'Decorative fireplace unit.' },
+  fountain: { family: 'decor', size: [0.8, 1.0, 0.8], description: 'Indoor water fountain feature.' },
+  roundbed: { family: 'bed', size: [2.4, 0.75, 2.4], description: 'Round bed for unique bedroom design.' },
+  hammock: { family: 'decor', size: [1.4, 1.2, 1.0], description: 'Hanging hammock chair.' },
+  swing: { family: 'decor', size: [1.0, 1.4, 1.0], description: 'Swing chair for relaxation.' },
+  bonsai: { family: 'plant', size: [0.5, 0.8, 0.5], description: 'Bonsai tree in decorative pot.' },
+  terrarium: { family: 'decor', size: [0.45, 0.5, 0.45], description: 'Glass terrarium for plants.' },
+  crib: { family: 'kids', size: [1.4, 1.1, 0.75], description: 'Baby crib for nursery.' },
+  changing: { family: 'kids', size: [1.0, 0.95, 0.6], description: 'Changing table for baby care.' },
+  highchair: { family: 'kids', size: [0.5, 1.0, 0.55], description: 'High chair for toddlers.' },
+  toychest: { family: 'kids', size: [1.0, 0.55, 0.5], description: 'Storage chest for toys.' },
+  kidsshelf: { family: 'kids', size: [0.9, 1.2, 0.35], description: 'Child-friendly bookshelf.' },
+  kidsdesk: { family: 'kids', size: [1.0, 0.7, 0.6], description: 'Kids desk for homework.' },
+  kidschair: { family: 'kids', size: [0.4, 0.65, 0.4], description: 'Small chair for children.' },
+  bunkbed: { family: 'bed', size: [2.0, 1.8, 1.0], description: 'Bunk bed for two children.' },
   default: { family: 'decor', size: [0.9, 0.9, 0.45], description: 'Flexible interior element.' },
 };
 
@@ -530,6 +727,83 @@ const FAMILY_VARIANT_PROFILES = {
     Minimal: { suffix: 'Seamless Appliance', geometryKey: 'appliance-minimal', multipliers: [0.96, 0.94, 0.92], silhouette: 'seamless', material: 'matte graphite' },
     Statement: { suffix: 'Retro Appliance', geometryKey: 'appliance-retro', multipliers: [1.06, 1.08, 1.04], silhouette: 'retro', material: 'gloss enamel' },
   },
+  shawarma: {
+    Compact: { suffix: 'Compact Shawarma Grill', geometryKey: 'shawarma-compact', multipliers: [0.9, 0.92, 0.9], silhouette: 'compact-vertical-grill', material: 'painted steel' },
+    Standard: { suffix: 'Shawarma Grill', geometryKey: 'shawarma-standard', multipliers: [1, 1, 1], silhouette: 'vertical-grill', material: 'stainless steel' },
+    Premium: { suffix: 'Dual Burner Shawarma Grill', geometryKey: 'shawarma-premium', multipliers: [1.08, 1.04, 1.02], silhouette: 'dual-burner-grill', material: 'stainless steel and glass' },
+    Minimal: { suffix: 'Minimal Shawarma Grill', geometryKey: 'shawarma-minimal', multipliers: [0.94, 0.96, 0.92], silhouette: 'clean-lined-grill', material: 'matte steel' },
+    Statement: { suffix: 'Showcase Shawarma Grill', geometryKey: 'shawarma-statement', multipliers: [1.1, 1.06, 1.04], silhouette: 'showcase-grill', material: 'blackened steel' },
+  },
+  grill: {
+    Compact: { suffix: 'Compact Grill Station', geometryKey: 'grill-compact', multipliers: [0.88, 0.9, 0.86], silhouette: 'compact-grill', material: 'powder-coated steel' },
+    Standard: { suffix: 'Grill Station', geometryKey: 'grill-standard', multipliers: [1, 1, 1], silhouette: 'flat-grill', material: 'stainless steel' },
+    Premium: { suffix: 'Pro Grill Station', geometryKey: 'grill-premium', multipliers: [1.08, 1.04, 1.02], silhouette: 'pro-flat-grill', material: 'steel and cast iron' },
+    Minimal: { suffix: 'Minimal Grill Station', geometryKey: 'grill-minimal', multipliers: [0.94, 0.94, 0.9], silhouette: 'minimal-grill', material: 'matte graphite steel' },
+    Statement: { suffix: 'Chef Grill Station', geometryKey: 'grill-statement', multipliers: [1.12, 1.06, 1.04], silhouette: 'chef-line-grill', material: 'black steel' },
+  },
+  spit: {
+    Compact: { suffix: 'Compact Spit', geometryKey: 'spit-compact', multipliers: [0.88, 0.9, 0.88], silhouette: 'compact-spit', material: 'steel' },
+    Standard: { suffix: 'Vertical Spit', geometryKey: 'spit-standard', multipliers: [1, 1, 1], silhouette: 'vertical-spit', material: 'stainless steel' },
+    Premium: { suffix: 'Dual Spit Stand', geometryKey: 'spit-premium', multipliers: [1.08, 1.04, 1.02], silhouette: 'dual-spit', material: 'steel and glass' },
+    Minimal: { suffix: 'Slim Spit', geometryKey: 'spit-minimal', multipliers: [0.92, 0.94, 0.92], silhouette: 'slim-spit', material: 'matte steel' },
+    Statement: { suffix: 'Showcase Spit', geometryKey: 'spit-statement', multipliers: [1.1, 1.06, 1.04], silhouette: 'showcase-spit', material: 'black steel' },
+  },
+  'service-counter': {
+    Compact: { suffix: 'Compact Counter', geometryKey: 'counter-compact', multipliers: [0.86, 0.9, 0.84], silhouette: 'compact-counter', material: 'laminate' },
+    Standard: { suffix: 'Prep Counter', geometryKey: 'counter-standard', multipliers: [1, 1, 1], silhouette: 'prep-counter', material: 'stainless steel' },
+    Premium: { suffix: 'Chef Counter', geometryKey: 'counter-premium', multipliers: [1.08, 1.04, 1.02], silhouette: 'chef-counter', material: 'steel and quartz' },
+    Minimal: { suffix: 'Minimal Counter', geometryKey: 'counter-minimal', multipliers: [0.94, 0.94, 0.92], silhouette: 'minimal-counter', material: 'matte steel' },
+    Statement: { suffix: 'Show Counter', geometryKey: 'counter-statement', multipliers: [1.1, 1.06, 1], silhouette: 'show-counter', material: 'blackened steel' },
+  },
+  'cold-counter': {
+    Compact: { suffix: 'Compact Refrigerated Counter', geometryKey: 'cold-counter-compact', multipliers: [0.88, 0.92, 0.88], silhouette: 'compact-cold-counter', material: 'stainless steel' },
+    Standard: { suffix: 'Refrigerated Counter', geometryKey: 'cold-counter-standard', multipliers: [1, 1, 1], silhouette: 'cold-counter', material: 'steel and glass' },
+    Premium: { suffix: 'Chef Refrigerated Counter', geometryKey: 'cold-counter-premium', multipliers: [1.08, 1.04, 1.02], silhouette: 'chef-cold-counter', material: 'steel and stone' },
+    Minimal: { suffix: 'Minimal Refrigerated Counter', geometryKey: 'cold-counter-minimal', multipliers: [0.94, 0.94, 0.92], silhouette: 'minimal-cold-counter', material: 'matte graphite' },
+    Statement: { suffix: 'Show Refrigerated Counter', geometryKey: 'cold-counter-statement', multipliers: [1.1, 1.06, 1.02], silhouette: 'show-cold-counter', material: 'black steel and glass' },
+  },
+  undercounter: {
+    Compact: { suffix: 'Compact Undercounter Fridge', geometryKey: 'fridge-under-compact', multipliers: [0.88, 0.9, 0.88], silhouette: 'compact-undercounter-fridge', material: 'white enamel' },
+    Standard: { suffix: 'Undercounter Fridge', geometryKey: 'fridge-under-standard', multipliers: [1, 1, 1], silhouette: 'undercounter-fridge', material: 'stainless steel' },
+    Premium: { suffix: 'Drawer Fridge', geometryKey: 'fridge-under-premium', multipliers: [1.06, 1.04, 1.02], silhouette: 'drawer-fridge', material: 'steel and glass' },
+    Minimal: { suffix: 'Panel Undercounter Fridge', geometryKey: 'fridge-under-minimal', multipliers: [0.94, 0.94, 0.92], silhouette: 'panel-undercounter-fridge', material: 'matte graphite' },
+    Statement: { suffix: 'Show Undercounter Fridge', geometryKey: 'fridge-under-statement', multipliers: [1.08, 1.06, 1.02], silhouette: 'show-undercounter-fridge', material: 'black steel' },
+  },
+  'cash-desk': {
+    Compact: { suffix: 'Compact Cash Desk', geometryKey: 'cash-compact', multipliers: [0.9, 0.92, 0.88], silhouette: 'compact-cash-desk', material: 'laminate' },
+    Standard: { suffix: 'Cash Desk', geometryKey: 'cash-standard', multipliers: [1, 1, 1], silhouette: 'cash-desk', material: 'oak and steel' },
+    Premium: { suffix: 'Service Cash Desk', geometryKey: 'cash-premium', multipliers: [1.08, 1.04, 1.02], silhouette: 'service-cash-desk', material: 'stone and steel' },
+    Minimal: { suffix: 'Minimal Cash Desk', geometryKey: 'cash-minimal', multipliers: [0.94, 0.94, 0.92], silhouette: 'minimal-cash-desk', material: 'matte black steel' },
+    Statement: { suffix: 'Feature Cash Desk', geometryKey: 'cash-statement', multipliers: [1.1, 1.06, 1], silhouette: 'feature-cash-desk', material: 'blackened oak' },
+  },
+  terminal: {
+    Compact: { suffix: 'Compact Terminal', geometryKey: 'terminal-compact', multipliers: [0.86, 0.88, 0.86], silhouette: 'compact-terminal', material: 'plastic' },
+    Standard: { suffix: 'Payment Terminal', geometryKey: 'terminal-standard', multipliers: [1, 1, 1], silhouette: 'payment-terminal', material: 'plastic and glass' },
+    Premium: { suffix: 'Counter Terminal', geometryKey: 'terminal-premium', multipliers: [1.04, 1.02, 1.02], silhouette: 'counter-terminal', material: 'anodized aluminum' },
+    Minimal: { suffix: 'Minimal Terminal', geometryKey: 'terminal-minimal', multipliers: [0.92, 0.94, 0.92], silhouette: 'minimal-terminal', material: 'matte black' },
+    Statement: { suffix: 'Signature Terminal', geometryKey: 'terminal-statement', multipliers: [1.06, 1.06, 1.02], silhouette: 'signature-terminal', material: 'black metal' },
+  },
+  handwash: {
+    Compact: { suffix: 'Compact Handwash Sink', geometryKey: 'handwash-compact', multipliers: [0.86, 0.9, 0.86], silhouette: 'compact-handwash', material: 'ceramic' },
+    Standard: { suffix: 'Handwash Sink', geometryKey: 'handwash-standard', multipliers: [1, 1, 1], silhouette: 'handwash-sink', material: 'stainless steel' },
+    Premium: { suffix: 'Service Handwash Sink', geometryKey: 'handwash-premium', multipliers: [1.04, 1.02, 1], silhouette: 'service-handwash-sink', material: 'steel and stone' },
+    Minimal: { suffix: 'Minimal Handwash Sink', geometryKey: 'handwash-minimal', multipliers: [0.92, 0.92, 0.88], silhouette: 'minimal-handwash-sink', material: 'matte steel' },
+    Statement: { suffix: 'Show Handwash Sink', geometryKey: 'handwash-statement', multipliers: [1.06, 1.04, 1], silhouette: 'show-handwash-sink', material: 'black steel' },
+  },
+  hood: {
+    Compact: { suffix: 'Compact Hood', geometryKey: 'hood-compact', multipliers: [0.88, 0.9, 0.88], silhouette: 'compact-hood', material: 'painted steel' },
+    Standard: { suffix: 'Exhaust Hood', geometryKey: 'hood-standard', multipliers: [1, 1, 1], silhouette: 'exhaust-hood', material: 'stainless steel' },
+    Premium: { suffix: 'Chef Hood', geometryKey: 'hood-premium', multipliers: [1.08, 1.04, 1.02], silhouette: 'chef-hood', material: 'steel and glass' },
+    Minimal: { suffix: 'Minimal Hood', geometryKey: 'hood-minimal', multipliers: [0.94, 0.94, 0.92], silhouette: 'minimal-hood', material: 'matte graphite steel' },
+    Statement: { suffix: 'Feature Hood', geometryKey: 'hood-statement', multipliers: [1.1, 1.06, 1.02], silhouette: 'feature-hood', material: 'blackened steel' },
+  },
+  'service-shelf': {
+    Compact: { suffix: 'Compact Packing Shelf', geometryKey: 'service-shelf-compact', multipliers: [0.88, 0.9, 0.86], silhouette: 'compact-packing-shelf', material: 'powder-coated steel' },
+    Standard: { suffix: 'Packing Shelf', geometryKey: 'service-shelf-standard', multipliers: [1, 1, 1], silhouette: 'packing-shelf', material: 'steel' },
+    Premium: { suffix: 'Service Shelf', geometryKey: 'service-shelf-premium', multipliers: [1.08, 1.04, 1], silhouette: 'service-shelf', material: 'steel and oak' },
+    Minimal: { suffix: 'Minimal Packing Shelf', geometryKey: 'service-shelf-minimal', multipliers: [0.94, 0.94, 0.92], silhouette: 'minimal-packing-shelf', material: 'matte steel' },
+    Statement: { suffix: 'Show Packing Shelf', geometryKey: 'service-shelf-statement', multipliers: [1.1, 1.06, 1.02], silhouette: 'show-packing-shelf', material: 'black steel' },
+  },
   plant: {
     Compact: { suffix: 'Desk Plant', geometryKey: 'plant-compact', multipliers: [0.72, 0.76, 0.72], silhouette: 'desk-plant', material: 'clay pot' },
     Standard: { suffix: 'Floor Plant', geometryKey: 'plant-standard', multipliers: [1, 1, 1], silhouette: 'floor-plant', material: 'ceramic pot' },
@@ -572,6 +846,27 @@ const FAMILY_VARIANT_PROFILES = {
     Minimal: { suffix: 'Monolith Decor Accent', geometryKey: 'decor-minimal', multipliers: [0.86, 1.04, 0.82], silhouette: 'monolith', material: 'travertine' },
     Statement: { suffix: 'Sculptural Decor Accent', geometryKey: 'decor-sculptural', multipliers: [1.04, 1.1, 1.04], silhouette: 'sculptural', material: 'colored glass' },
   },
+  fitness: {
+    Compact: { suffix: 'Compact Fitness', geometryKey: 'fitness-compact', multipliers: [0.8, 0.85, 0.8], silhouette: 'compact', material: 'gray plastic' },
+    Standard: { suffix: 'Standard Fitness', geometryKey: 'fitness-standard', multipliers: [1, 1, 1], silhouette: 'standard', material: 'black metal' },
+    Premium: { suffix: 'Pro Fitness', geometryKey: 'fitness-premium', multipliers: [1.1, 1.05, 1.05], silhouette: 'pro', material: 'chrome and leather' },
+    Minimal: { suffix: 'Wall-Mount Fitness', geometryKey: 'fitness-minimal', multipliers: [0.9, 0.95, 0.75], silhouette: 'wall-mount', material: 'white steel' },
+    Statement: { suffix: 'Designer Fitness', geometryKey: 'fitness-statement', multipliers: [1.05, 1.1, 1.02], silhouette: 'designer', material: 'oak and brass' },
+  },
+  hobby: {
+    Compact: { suffix: 'Compact Hobby', geometryKey: 'hobby-compact', multipliers: [0.8, 0.82, 0.8], silhouette: 'compact', material: 'pine' },
+    Standard: { suffix: 'Standard Hobby', geometryKey: 'hobby-standard', multipliers: [1, 1, 1], silhouette: 'standard', material: 'oak' },
+    Premium: { suffix: 'Artisan Hobby', geometryKey: 'hobby-premium', multipliers: [1.1, 1.08, 1.05], silhouette: 'artisan', material: 'walnut' },
+    Minimal: { suffix: 'Slim Hobby', geometryKey: 'hobby-minimal', multipliers: [0.9, 0.92, 0.85], silhouette: 'slim', material: 'matte metal' },
+    Statement: { suffix: 'Showcase Hobby', geometryKey: 'hobby-statement', multipliers: [1.08, 1.12, 1.02], silhouette: 'showcase', material: 'gloss lacquer' },
+  },
+  kids: {
+    Compact: { suffix: 'Compact Kids', geometryKey: 'kids-compact', multipliers: [0.8, 0.82, 0.8], silhouette: 'compact', material: 'white plastic' },
+    Standard: { suffix: 'Standard Kids', geometryKey: 'kids-standard', multipliers: [1, 1, 1], silhouette: 'standard', material: 'birch' },
+    Premium: { suffix: 'Premium Kids', geometryKey: 'kids-premium', multipliers: [1.08, 1.05, 1.05], silhouette: 'premium', material: 'white oak' },
+    Minimal: { suffix: 'Modern Kids', geometryKey: 'kids-minimal', multipliers: [0.92, 0.9, 0.88], silhouette: 'modern', material: 'white matte' },
+    Statement: { suffix: 'Designer Kids', geometryKey: 'kids-statement', multipliers: [1.05, 1.08, 1.02], silhouette: 'designer', material: 'pastel lacquer' },
+  },
 };
 
 function getFamilyVariantProfile(family, tier) {
@@ -587,6 +882,61 @@ function slugify(value) {
 
 function inferSpec(label) {
   const lower = label.toLowerCase();
+  
+  const EXPLICIT_MAPPINGS = {
+    'treadmill': 'treadmill',
+    'exercise bike': 'bike',
+    'bike': 'bike',
+    'dumbbells': 'dumbbells',
+    'yoga mat': 'yoga',
+    'weight bench': 'bench',
+    'pull-up bar': 'pullup',
+    'pull up bar': 'pullup',
+    'resistance bands': 'bands',
+    'fitness ball': 'ball',
+    'easel': 'easel',
+    'sewing machine': 'sewing',
+    'guitar': 'guitar',
+    'piano': 'piano',
+    'keyboard instrument': 'keyboard',
+    'drum set': 'drums',
+    'art supply cabinet': 'artcabinet',
+    'craft table': 'crafttable',
+    'shawarma grill': 'shawarma',
+    'grill station': 'grill',
+    'vertical spit': 'spit',
+    'prep counter': 'prepcounter',
+    'refrigerated counter': 'coldcounter',
+    'undercounter fridge': 'undercounterfridge',
+    'cash desk': 'cashdesk',
+    'contactless terminal': 'terminal',
+    'handwash sink': 'handsink',
+    'sauce station': 'saucestation',
+    'packing shelf': 'packingshelf',
+    'exhaust hood': 'exhaust',
+    'aquarium': 'aquarium',
+    'fireplace': 'fireplace',
+    'fountain': 'fountain',
+    'round bed': 'roundbed',
+    'hammock': 'hammock',
+    'swing chair': 'swing',
+    'bonsai tree': 'bonsai',
+    'terrarium': 'terrarium',
+    'crib': 'crib',
+    'changing table': 'changing',
+    'high chair': 'highchair',
+    'toy chest': 'toychest',
+    'kids bookshelf': 'kidsshelf',
+    'kids desk': 'kidsdesk',
+    'kids chair': 'kidschair',
+    'bunk bed': 'bunkbed',
+  };
+  
+  const explicitKey = EXPLICIT_MAPPINGS[lower];
+  if (explicitKey && FAMILY_SPECS[explicitKey]) {
+    return FAMILY_SPECS[explicitKey];
+  }
+  
   const entries = Object.entries(FAMILY_SPECS).filter(([key]) => key !== 'default');
   for (const [key, spec] of entries) {
     if (lower.includes(key)) {
@@ -1054,7 +1404,11 @@ export function getLightingScenario(lightingScenarioId) {
 }
 
 export function getRoomArea(room) {
-  return Number((room.width * room.depth).toFixed(1));
+  return Math.floor(room.width * room.depth * 100) / 100;
+}
+
+export function formatArea(area) {
+  return (Math.floor(Number(area ?? 0) * 100) / 100).toFixed(2);
 }
 
 export function getCatalogFamilies() {

@@ -4,14 +4,16 @@
 
 - unified planner state for Apartment and House projects
 - 2D and isometric views
-- local furniture catalog with five variant tiers
-- right-side selection inspector
+- local furniture catalog with five variant tiers, search, and room-aware recommendations
+- room/floor navigator, presentation controls, and right-side selection inspector
+- explicit 2D wall actions for adjacent rooms, doors, and windows with shared-state isometric markers
+- live validation summaries with room jump actions and overlap checks
 
 ## Next
 
-- add explicit door and window authoring tools in 2D
 - deepen collision and comfort rules with real clearance volumes
-- add richer item thumbnails and category search
+- support editing and deleting existing wall openings
+- add richer item thumbnails and category search scoring
 - improve isometric camera presets and framing
 
 ## Later

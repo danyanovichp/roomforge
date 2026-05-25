@@ -1,0 +1,336 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - paragraph [ref=e6]: RoomForge
+      - heading "Планировщик жилья" [level=1] [ref=e7]
+      - paragraph [ref=e8]: Проектируйте жилье на сетке, проверяйте его в изометрии и наращивайте планировку комната за комнатой в одном состоянии проекта.
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: Сценарий проекта
+        - generic [ref=e12]: 1 этаж(а)
+      - generic [ref=e13]:
+        - button "Для жилья" [ref=e14] [cursor=pointer]
+        - button "Для бизнеса" [ref=e15] [cursor=pointer]
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - generic [ref=e18]: Тип объекта
+          - combobox "Тип объекта" [ref=e19]:
+            - option "Квартира" [selected]
+            - option "Дом"
+        - generic [ref=e20]:
+          - generic [ref=e21]: Шаблон
+          - combobox "Шаблон" [ref=e22]:
+            - option "Студия"
+            - option "1-комнатная квартира" [selected]
+            - option "2-комнатная квартира"
+            - option "Офис"
+            - option "Спальня"
+            - option "Кухня-гостиная"
+        - generic [ref=e23]:
+          - generic [ref=e24]: Этаж
+          - combobox "Этаж" [ref=e25]:
+            - option "Этаж 1" [selected]
+        - generic [ref=e26]:
+          - generic [ref=e27]: Вид
+          - combobox "Вид" [ref=e28]:
+            - option "2D" [selected]
+            - option "Изометрия"
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - generic [ref=e31]: AI-планировка
+        - generic [ref=e32]: Ключ и текстовое описание
+      - paragraph [ref=e33]: Сгенерируйте новый вариант жилой планировки по текстовому описанию. Запрос отправляется напрямую из браузера в OpenAI.
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e36]: OpenAI API key
+          - textbox "OpenAI API key" [ref=e37]:
+            - /placeholder: sk-...
+        - generic [ref=e38]:
+          - checkbox "Запомнить ключ на этом устройстве" [ref=e39]
+          - generic [ref=e40]: Запомнить ключ на этом устройстве
+        - generic [ref=e41]:
+          - generic [ref=e42]: Модель
+          - textbox "Модель" [ref=e43]:
+            - /placeholder: gpt-4o-mini
+            - text: gpt-4o-mini
+        - generic [ref=e44]:
+          - generic [ref=e45]: Промпт
+          - textbox "Промпт" [ref=e46]:
+            - /placeholder: "Например: сделай 2-комнатную квартиру 58 м² с кухней-гостиной, спальней, небольшим кабинетом, светлым стилем и базовой меблировкой."
+            - text: "Сделай удобную квартиру для жизни пары: кухня-гостиная, спальня, рабочее место, входная зона и базовая меблировка."
+        - button "Сгенерировать планировку" [ref=e47] [cursor=pointer]
+    - generic [ref=e48]:
+      - generic [ref=e49]:
+        - generic [ref=e50]: Навигатор плана
+        - generic [ref=e51]: 2 комнат(ы) на этаже
+      - button "Этаж 1" [ref=e53] [cursor=pointer]
+      - generic [ref=e54]:
+        - button "Гостиная 30.00 м² • 3 предметов OK" [ref=e55] [cursor=pointer]:
+          - strong [ref=e56]: Гостиная
+          - generic [ref=e57]: 30.00 м² • 3 предметов
+          - generic [ref=e58]: OK
+        - button "Спальня 21.60 м² • 3 предметов OK" [ref=e59] [cursor=pointer]:
+          - strong [ref=e60]: Спальня
+          - generic [ref=e61]: 21.60 м² • 3 предметов
+          - generic [ref=e62]: OK
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e65]: Визуальный режим
+        - generic [ref=e66]: Тема, стиль, свет
+      - generic [ref=e67]:
+        - button "Светлая тема" [ref=e68] [cursor=pointer]
+        - button "Темная тема" [ref=e69] [cursor=pointer]
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]: Стиль
+          - combobox "Стиль" [ref=e73]:
+            - option "Минимализм" [selected]
+            - option "Сканди"
+            - option "Джапанди"
+            - option "Лофт"
+            - option "Warm Neutral"
+            - option "Modern Classic"
+        - generic [ref=e74]:
+          - generic [ref=e75]: Освещение
+          - combobox "Освещение" [ref=e76]:
+            - option "День" [selected]
+            - option "Вечер"
+            - option "Теплый свет"
+            - option "Холодный свет"
+            - option "Ночь"
+    - generic [ref=e77]:
+      - generic [ref=e79]: Сводка проекта
+      - generic [ref=e80]:
+        - generic [ref=e81]:
+          - strong [ref=e82]: 51.60 м²
+          - text: Общая площадь
+        - generic [ref=e83]:
+          - strong [ref=e84]: "2"
+          - text: Комнаты
+        - generic [ref=e85]:
+          - strong [ref=e86]: "6"
+          - text: Предметы
+        - generic [ref=e87]:
+          - strong [ref=e88]: "0"
+          - text: Замечания по планировке
+      - generic [ref=e89]: "1-комнатная квартира: в проекте 2 комнат и 6 расставленных предметов."
+    - generic [ref=e90]:
+      - generic [ref=e91]:
+        - generic [ref=e92]: Библиотека мебели
+        - generic [ref=e93]: Для комнаты «Гостиная»
+      - generic [ref=e94]:
+        - generic [ref=e95]:
+          - generic [ref=e96]: Поиск
+          - searchbox "Поиск" [ref=e97]
+        - generic [ref=e98]:
+          - generic [ref=e99]:
+            - generic [ref=e100]: Уровень варианта
+            - combobox "Уровень варианта" [ref=e101]:
+              - option "Compact"
+              - option "Standard" [selected]
+              - option "Premium"
+              - option "Minimal"
+              - option "Statement"
+          - button "Рекомендуемое" [ref=e102] [cursor=pointer]
+      - tablist "Категории библиотеки" [ref=e103]:
+        - button "Рекомендуемое" [ref=e104] [cursor=pointer]
+        - button "Гостиная" [ref=e105] [cursor=pointer]
+        - button "Свет" [ref=e106] [cursor=pointer]
+        - button "Декор" [ref=e107] [cursor=pointer]
+        - button "Текстиль" [ref=e108] [cursor=pointer]
+        - button "Хранение" [ref=e109] [cursor=pointer]
+        - button "Климат и инженерия" [ref=e110] [cursor=pointer]
+        - button "Архитектурные элементы" [ref=e111] [cursor=pointer]
+        - button "Фитнес" [ref=e112] [cursor=pointer]
+        - button "Хобби" [ref=e113] [cursor=pointer]
+        - button "Уникальные элементы" [ref=e114] [cursor=pointer]
+      - generic [ref=e115]:
+        - article [ref=e116]:
+          - img [ref=e118]
+          - generic [ref=e120]:
+            - strong [ref=e121]: Air Conditioner
+            - generic [ref=e122]: Климат и инженерия
+            - paragraph [ref=e123]: Climate-control appliance.
+          - button "Add to Living Room" [ref=e124] [cursor=pointer]
+        - article [ref=e125]:
+          - img [ref=e127]
+          - generic [ref=e129]:
+            - strong [ref=e130]: Aquarium
+            - generic [ref=e131]: Уникальные элементы
+            - paragraph [ref=e132]: Fish tank or aquarium enclosure.
+          - button "Add to Living Room" [ref=e133] [cursor=pointer]
+        - article [ref=e134]:
+          - img [ref=e136]
+          - generic [ref=e139]:
+            - strong [ref=e140]: Кресло
+            - generic [ref=e141]: Гостиная
+            - paragraph [ref=e142]: Дополнительное кресло для ожидания или отдыха.
+          - button "Add to Living Room" [ref=e143] [cursor=pointer]
+        - article [ref=e144]:
+          - img [ref=e146]
+          - generic [ref=e148]:
+            - strong [ref=e149]: Art Supply Cabinet
+            - generic [ref=e150]: Хобби
+            - paragraph [ref=e151]: Art supply storage cabinet.
+          - button "Add to Living Room" [ref=e152] [cursor=pointer]
+        - article [ref=e153]:
+          - img [ref=e155]
+          - generic [ref=e157]:
+            - strong [ref=e158]: Baseboard
+            - generic [ref=e159]: Архитектурные элементы
+            - paragraph [ref=e160]: Flexible interior element.
+          - button "Add to Living Room" [ref=e161] [cursor=pointer]
+        - article [ref=e162]:
+          - img [ref=e164]
+          - generic [ref=e166]:
+            - strong [ref=e167]: Basket
+            - generic [ref=e168]: Хранение
+            - paragraph [ref=e169]: Flexible interior element.
+          - button "Add to Living Room" [ref=e170] [cursor=pointer]
+        - article [ref=e171]:
+          - img [ref=e173]
+          - generic [ref=e175]:
+            - strong [ref=e176]: Bench
+            - generic [ref=e177]: Гостиная
+            - paragraph [ref=e178]: Weight bench for strength exercises.
+          - button "Add to Living Room" [ref=e179] [cursor=pointer]
+        - article [ref=e180]:
+          - img [ref=e182]
+          - generic [ref=e184]:
+            - strong [ref=e185]: Blinds
+            - generic [ref=e186]: Текстиль
+            - paragraph [ref=e187]: Compact window covering.
+          - button "Add to Living Room" [ref=e188] [cursor=pointer]
+        - article [ref=e189]:
+          - img [ref=e191]
+          - generic [ref=e194]:
+            - strong [ref=e195]: Bonsai Tree
+            - generic [ref=e196]: Уникальные элементы
+            - paragraph [ref=e197]: Bonsai tree in decorative pot.
+          - button "Add to Living Room" [ref=e198] [cursor=pointer]
+        - article [ref=e199]:
+          - img [ref=e201]
+          - generic [ref=e203]:
+            - strong [ref=e204]: Bookcase
+            - generic [ref=e205]: Гостиная
+            - paragraph [ref=e206]: Flexible interior element.
+          - button "Add to Living Room" [ref=e207] [cursor=pointer]
+        - article [ref=e208]:
+          - img [ref=e210]
+          - generic [ref=e212]:
+            - strong [ref=e213]: Шкафчик
+            - generic [ref=e214]: Хранение
+            - paragraph [ref=e215]: Закрытое хранение для вещей и расходников.
+          - button "Add to Living Room" [ref=e216] [cursor=pointer]
+        - article [ref=e217]:
+          - img [ref=e219]
+          - generic [ref=e221]:
+            - strong [ref=e222]: Candle
+            - generic [ref=e223]: Декор
+            - paragraph [ref=e224]: Flexible interior element.
+          - button "Add to Living Room" [ref=e225] [cursor=pointer]
+        - article [ref=e226]:
+          - img [ref=e228]
+          - generic [ref=e230]:
+            - strong [ref=e231]: Потолочный светильник
+            - generic [ref=e232]: Свет
+            - paragraph [ref=e233]: Основной верхний свет.
+          - button "Add to Living Room" [ref=e234] [cursor=pointer]
+        - article [ref=e235]:
+          - img [ref=e237]
+          - generic [ref=e239]:
+            - strong [ref=e240]: Chandelier
+            - generic [ref=e241]: Свет
+            - paragraph [ref=e242]: Statement ceiling-mounted light.
+          - button "Add to Living Room" [ref=e243] [cursor=pointer]
+        - article [ref=e244]:
+          - img [ref=e246]
+          - generic [ref=e248]:
+            - strong [ref=e249]: Chest
+            - generic [ref=e250]: Хранение
+            - paragraph [ref=e251]: Flexible interior element.
+          - button "Add to Living Room" [ref=e252] [cursor=pointer]
+        - article [ref=e253]:
+          - img [ref=e255]
+          - generic [ref=e257]:
+            - strong [ref=e258]: Clock
+            - generic [ref=e259]: Декор
+            - paragraph [ref=e260]: Flexible interior element.
+          - button "Add to Living Room" [ref=e261] [cursor=pointer]
+        - article [ref=e262]:
+          - img [ref=e264]
+          - generic [ref=e267]:
+            - strong [ref=e268]: Журнальный столик
+            - generic [ref=e269]: Гостиная
+            - paragraph [ref=e270]: Невысокий столик для lounge-зоны.
+          - button "Add to Living Room" [ref=e271] [cursor=pointer]
+        - article [ref=e272]:
+          - img [ref=e274]
+          - generic [ref=e277]:
+            - strong [ref=e278]: Console Table
+            - generic [ref=e279]: Гостиная
+            - paragraph [ref=e280]: Table surface for work, dining, or display.
+          - button "Add to Living Room" [ref=e281] [cursor=pointer]
+  - main [ref=e282]:
+    - generic [ref=e283]:
+      - generic [ref=e284]:
+        - generic [ref=e285]:
+          - paragraph [ref=e286]: Планировщик жилья
+          - heading "Текущая планировка" [level=2] [ref=e287]
+        - generic [ref=e288]:
+          - generic [ref=e289]: Этаж 1
+          - generic [ref=e290]: Гостиная
+          - generic [ref=e291]: Проверки пройдены
+      - generic [ref=e292]:
+        - generic [ref=e293]: Нажмите один раз, чтобы выбрать комнату или предмет.
+        - generic [ref=e294]: Повторным действием можно перетаскивать предметы и менять размеры комнаты.
+        - generic [ref=e295]: Через выбранную стену добавляйте соседнюю комнату, дверь или окно.
+      - img [ref=e298]:
+        - generic [ref=e300]:
+          - generic: Гостиная
+          - generic: 30.00 m²
+          - generic [ref=e304]:
+            - generic: Диван
+          - generic [ref=e306]:
+            - generic: Телевизор
+          - generic [ref=e308]:
+            - generic: Журнальный столик
+        - generic [ref=e310]:
+          - generic: Спальня
+          - generic: 21.60 m²
+          - generic [ref=e314]:
+            - generic: Кровать
+          - generic [ref=e316]:
+            - generic: Тумба
+          - generic [ref=e318]:
+            - generic: Шкаф
+  - complementary [ref=e320]:
+    - generic [ref=e321]:
+      - generic [ref=e322]:
+        - generic [ref=e323]: Выделение
+        - generic [ref=e324]: room
+      - heading "Гостиная" [level=3] [ref=e325]
+      - paragraph [ref=e326]: "6 × 5 м, предметов: 3, проверок для комнаты: 0."
+      - generic [ref=e327]:
+        - generic [ref=e328]:
+          - strong [ref=e329]: 30.00 м²
+          - text: Площадь комнаты
+        - generic [ref=e330]:
+          - strong [ref=e331]: "3"
+          - text: Расставлено предметов
+        - generic [ref=e332]:
+          - strong [ref=e333]: "0"
+          - text: Двери
+        - generic [ref=e334]:
+          - strong [ref=e335]: "0"
+          - text: Окна
+        - generic [ref=e336]:
+          - strong [ref=e337]: "0"
+          - text: Проверки по комнате
+    - generic [ref=e338]:
+      - generic [ref=e339]:
+        - generic [ref=e340]: Проверка планировки
+        - generic [ref=e341]: 0 ошибок • 0 предупреждений
+      - generic [ref=e342]:
+        - strong [ref=e343]: Блокирующих проблем не найдено
+        - generic [ref=e344]: Текущая планировка проходит встроенные проверки по проходам, дверным зонам, дистанции просмотра и пересечениям комнат.

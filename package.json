@@ -1,16 +1,37 @@
 {
-    "name": "3d-vizual",
-    "private": true,
-    "version": "0.0.0",
+    "name": "roomforge",
+    "version": "0.1.0",
+    "description": "Browser-based interior planning demo with 2D and isometric review.",
     "type": "module",
+    "bin": {
+        "roomforge": "./scripts/serve.mjs"
+    },
+    "files": [
+        "dist",
+        "scripts/serve.mjs",
+        "scripts/start.mjs",
+        "README.md",
+        "LICENSE"
+    ],
     "scripts": {
         "start": "node ./scripts/start.mjs",
         "setup": "npm install",
         "dev": "vite",
         "build": "vite build",
         "lint": "eslint .",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "prepack": "npm run build",
+        "verify:package": "node ./scripts/smoke-package.mjs"
     },
+    "keywords": [
+        "roomforge",
+        "interior-design",
+        "planner",
+        "3d",
+        "vite"
+    ],
+    "author": "",
+    "license": "MIT",
     "dependencies": {
         "@react-three/drei": "^9.50.0",
         "@react-three/fiber": "^8.12.0",

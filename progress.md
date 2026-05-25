@@ -53,3 +53,30 @@ Updated TODO / handoff:
 - 2026-03-09: Added `npm run setup` as an explicit install helper and updated `README.md` so `npm start` is the primary local run path while `npm run dev` remains the lower-level developer flow.
 - 2026-03-09: Verified `npm start` works with existing dependencies, prints the reachable URL, and leaves no lingering Vite/bootstrap processes after `Ctrl+C`.
 - 2026-03-09: Verified the occupied-port case by keeping `5173` busy and starting the bootstrap script in parallel. The script correctly waited for Vite's announced fallback URL and reported `http://127.0.0.1:5174/` instead of attaching to the already-running server.
+
+- 2026-03-11: Refocused the UI on apartment planning in `src/App.jsx`: hid project-type / styles / lighting / furniture-library / related-replacements controls without deleting underlying data, switched the main controls to compact selects, and added a wall-expansion modal for creating adjacent rooms from selected walls.
+- 2026-03-11: Updated planner behavior in `src/lib/planner.js`, `src/components/Planner2D.jsx`, and `src/components/PlannerScene.jsx` so item movement now requires prior selection, clicking empty space clears selection, item movement snaps to a 1 meter grid in both 2D and isometric views, selected walls show a visible `+`, and confirming the wall modal creates a new room plus paired door openings.
+- 2026-03-11: Strengthened the visible 2D grid/walls and area formatting. `src/data/plannerData.js` now truncates area display to two decimals (for example `21.59`) and both 2D and isometric room badges use the shared formatter.
+- 2026-03-11: Verified `npm run build` passes after the apartment UX refactor. Vite still reports the pre-existing `three-mesh-bvh` / `BatchedMesh` warning and large bundle warning.
+- 2026-03-11: Ran the required Playwright web-game client against `http://127.0.0.1:4173` and captured a fresh visual artifact at `output/apartment-ux/shot-0.png`. The 2D apartment shell/grid rendered correctly in the screenshot; the text-state artifact remained in `2d`, so automated coverage for the select-driven switch to isometric still needs stable selectors.
+
+Updated TODO / handoff:
+- Add stable test selectors for workspace selects and wall-plus controls so Playwright can verify 2D-to-isometric transitions and wall-room creation without relying on fragile coordinate clicks.
+- Consider rendering visible door markers/openings in isometric as actual cutouts if wall-editing fidelity becomes the next priority.
+
+- 2026-03-25: Reworked `src/App.jsx` into a fuller planner cockpit with visible room/floor navigation, presentation controls for theme/style/lighting, stronger scene hints, a more actionable selection inspector, and validation cards that jump directly to affected rooms/items.
+- 2026-03-25: Added a searchable room-aware furniture library in `src/components/PlannerLibrary.jsx`, restored discoverability for catalog content, and wired one-click placement to suggested in-room positions instead of forcing manual drag/drop for every addition.
+- 2026-03-25: Strengthened planner helpers in `src/lib/planner.js`: added suggested item placement, richer validation metadata, room-overlap validation, safer runtime ids, and auto-selection of newly added items.
+- 2026-03-25: Added stable test selectors and clearer affordances in `src/components/Planner2D.jsx` and `src/components/PlannerScene.jsx`, plus refreshed `src/index.css` to support the new navigator/library/validation UI with stronger visual hierarchy.
+- 2026-03-25: Updated `README.md` and `ROADMAP.md` to reflect the current planner workflow, room-aware library, and improved validation/navigation surface.
+- 2026-03-25: Verified `npm run build` passes after the UX/code/docs batch. `npm run verify:package` only passed the initial packaging step when rerun with a writable temp npm cache; the full clean-install smoke flow remains environment-limited here because npm packaging/logging defaults and networked install behavior are sandbox-constrained.
+
+- 2026-04-01: Added explicit wall-level opening authoring in `src/App.jsx` and `src/lib/planner.js`. Selected walls can now open a dedicated door/window composer with width and center-offset controls, and new openings are clamped to the wall span automatically.
+- 2026-04-01: Updated `src/components/Planner2D.jsx`, `src/components/PlannerScene.jsx`, and `src/index.css` so authored doors/windows render immediately in 2D and remain visible as lightweight markers in isometric mode. Added stable test selectors for rendered 2D openings and wall-action buttons.
+- 2026-04-01: Updated `README.md` and `ROADMAP.md` to move door/window authoring into the shipped baseline and narrow the next follow-up to editing/deleting existing openings plus stronger clearance logic.
+- 2026-04-01: Verified both `npm run build` and `npm run verify:package` pass after the opening-authoring slice. Vite still reports the pre-existing `three-mesh-bvh` / `BatchedMesh` warning and large bundle warning.
+
+Updated TODO / handoff:
+- Add edit/delete controls for existing doors and windows; this slice only supports explicit creation.
+- Upgrade isometric opening markers from lightweight overlays to true wall cutouts if presentation fidelity becomes a priority.
+- Keep pushing on code-splitting for the ~1 MB app bundle before the planner surface grows much further.

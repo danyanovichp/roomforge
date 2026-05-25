@@ -1,9 +1,11 @@
 import React, { forwardRef, useImperativeHandle, useMemo, useRef, useState } from 'react';
-import { CATALOG_BY_ID, getRoomArea } from '../data/plannerData';
+import { CATALOG_BY_ID, formatArea, getRoomArea } from '../data/plannerData';
 import { getItemFootprint } from '../lib/planner';
+import { getRussianItemLabel, getRussianRoomLabel } from '../lib/russian';
 
 const CELL_SIZE = 56;
 const PADDING = 56;
+const ITEM_NUDGE_STEP = 1;
 
 function getBounds(floor) {
   const rooms = floor.rooms;
@@ -31,10 +33,6 @@ function fromPointer(event, bounds) {
   };
 }
 
-function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), max);
-}
-
 function drawGrid(width, height) {
   const lines = [];
   for (let x = PADDING; x <= width - PADDING; x += CELL_SIZE) {
@@ -54,6 +52,67 @@ function itemRect(item) {
   };
 }
 
+function getWallLine(room, wall) {
+  const left = toCanvasX(room.x);
+  const right = toCanvasX(room.x + room.width);
+  const top = toCanvasZ(room.z);
+  const bottom = toCanvasZ(room.z + room.depth);
+
+  if (wall === 'north') {
+    return { x1: left, y1: top, x2: right, y2: top };
+  }
+  if (wall === 'south') {
+    return { x1: left, y1: bottom, x2: right, y2: bottom };
+  }
+  if (wall === 'east') {
+    return { x1: right, y1: top, x2: right, y2: bottom };
+  }
+  return { x1: left, y1: top, x2: left, y2: bottom };
+}
+
+function getWallCenter(room, wall) {
+  const line = getWallLine(room, wall);
+  return {
+    x: (line.x1 + line.x2) / 2,
+    y: (line.y1 + line.y2) / 2,
+  };
+}
+
+function getOpeningRect(room, opening, thickness = 8) {
+  const openingWidth = opening.width * CELL_SIZE;
+  const wallThickness = thickness;
+  if (opening.wall === 'north') {
+    return {
+      x: toCanvasX(room.x + opening.offset) - openingWidth / 2,
+      y: toCanvasZ(room.z) - wallThickness / 2,
+      width: openingWidth,
+      height: wallThickness,
+    };
+  }
+  if (opening.wall === 'south') {
+    return {
+      x: toCanvasX(room.x + opening.offset) - openingWidth / 2,
+      y: toCanvasZ(room.z + room.depth) - wallThickness / 2,
+      width: openingWidth,
+      height: wallThickness,
+    };
+  }
+  if (opening.wall === 'east') {
+    return {
+      x: toCanvasX(room.x + room.width) - wallThickness / 2,
+      y: toCanvasZ(room.z + opening.offset) - openingWidth / 2,
+      width: wallThickness,
+      height: openingWidth,
+    };
+  }
+  return {
+    x: toCanvasX(room.x) - wallThickness / 2,
+    y: toCanvasZ(room.z + opening.offset) - openingWidth / 2,
+    width: wallThickness,
+    height: openingWidth,
+  };
+}
+
 const Planner2D = forwardRef(function Planner2D(
   {
     floor,
@@ -61,12 +120,14 @@ const Planner2D = forwardRef(function Planner2D(
     selection,
     onSelectRoom,
     onSelectItem,
+    onSelectWall,
     onMoveItem,
     onResizeRoom,
     onAddItem,
+    onNudgeItem,
+    onClearSelection,
+    onOpenWallExpand,
     activeRoomId,
-    pendingPlacement,
-    onCommitPlacement,
     readOnly = false,
   },
   ref
@@ -170,10 +231,18 @@ const Planner2D = forwardRef(function Planner2D(
     setDropPreview(null);
   };
 
+  const nudgeDirections = [
+    { id: 'up', dx: 0, dz: -ITEM_NUDGE_STEP, label: 'Сдвинуть вверх', symbol: '↑', offsetX: 0, offsetY: -54 },
+    { id: 'right', dx: ITEM_NUDGE_STEP, dz: 0, label: 'Сдвинуть вправо', symbol: '→', offsetX: 54, offsetY: 0 },
+    { id: 'down', dx: 0, dz: ITEM_NUDGE_STEP, label: 'Сдвинуть вниз', symbol: '↓', offsetX: 0, offsetY: 54 },
+    { id: 'left', dx: -ITEM_NUDGE_STEP, dz: 0, label: 'Сдвинуть влево', symbol: '←', offsetX: -54, offsetY: 0 },
+  ];
+
   return (
     <div
       ref={wrapperRef}
       className="planner-2d"
+      data-testid="planner-2d-canvas"
       onDragOver={handleDragOver}
       onDragLeave={() => setDropPreview(null)}
       onDrop={handleDrop}
@@ -187,7 +256,15 @@ const Planner2D = forwardRef(function Planner2D(
         onPointerUp={() => setDragState(null)}
         onPointerLeave={() => setDragState(null)}
       >
-        <rect width={bounds.width} height={bounds.height} className="planner-bg" />
+        <rect
+          width={bounds.width}
+          height={bounds.height}
+          className="planner-bg"
+          onPointerDown={() => {
+            setDragState(null);
+            onClearSelection?.();
+          }}
+        />
         {drawGrid(bounds.width, bounds.height)}
 
         {floor.rooms.map((room) => {
@@ -198,26 +275,62 @@ const Planner2D = forwardRef(function Planner2D(
           const roomDepth = room.depth * CELL_SIZE;
 
           return (
-            <g key={room.id} className={room.id === activeRoomId ? 'active-room' : ''}>
+            <g key={room.id} className={room.id === activeRoomId ? 'active-room' : ''} data-testid={`planner-room-${room.id}`}>
               <rect
                 x={roomX}
                 y={roomZ}
                 width={roomWidth}
                 height={roomDepth}
                 className={`room-rect ${selected ? 'selected' : ''}`}
+                data-testid={`planner-room-rect-${room.id}`}
                 onPointerDown={(event) => {
                   event.stopPropagation();
                   onSelectRoom(room.id);
-                  if (readOnly || !pendingPlacement) {
-                    return;
-                  }
-                  const point = fromPointer(event, svgRef.current);
-                  const localX = clamp(point.x - room.x, 0.8, room.width - 0.8);
-                  const localZ = clamp(point.z - room.z, 0.8, room.depth - 0.8);
-                  onAddItem(room.id, pendingPlacement.catalogId, pendingPlacement.tier, localX, localZ);
-                  onCommitPlacement?.();
                 }}
               />
+              {['north', 'east', 'south', 'west'].map((wall) => {
+                const line = getWallLine(room, wall);
+                const selectedWall = selection?.kind === 'wall' && selection.roomId === room.id && selection.wall === wall;
+                const wallCenter = getWallCenter(room, wall);
+
+                return (
+                  <g key={`${room.id}-${wall}`}>
+                    <line
+                      x1={line.x1}
+                      y1={line.y1}
+                      x2={line.x2}
+                      y2={line.y2}
+                      className={`wall-line-2d ${selectedWall ? 'selected' : ''}`}
+                      onPointerDown={(event) => {
+                        event.stopPropagation();
+                        onSelectWall?.(room.id, wall);
+                      }}
+                    />
+                    {selectedWall && !readOnly && (
+                      <g
+                        className="wall-plus-2d"
+                        data-testid={`wall-plus-2d-${room.id}-${wall}`}
+                        transform={`translate(${wallCenter.x}, ${wallCenter.y})`}
+                        onPointerDown={(event) => {
+                          event.stopPropagation();
+                          onOpenWallExpand?.(room.id, wall);
+                        }}
+                      >
+                        <circle r="16" />
+                        <text y="5">+</text>
+                      </g>
+                    )}
+                  </g>
+                );
+              })}
+              {(room.openings?.doors ?? []).map((door) => {
+                const doorRect = getOpeningRect(room, door, 8);
+                return <rect key={door.id} {...doorRect} className="door-gap-2d" data-testid={`door-2d-${door.id}`} rx={4} />;
+              })}
+              {(room.openings?.windows ?? []).map((window) => {
+                const windowRect = getOpeningRect(room, window, 12);
+                return <rect key={window.id} {...windowRect} className="window-gap-2d" data-testid={`window-2d-${window.id}`} rx={4} />;
+              })}
               {!readOnly && (
                 <>
                   <rect
@@ -246,10 +359,10 @@ const Planner2D = forwardRef(function Planner2D(
                 </>
               )}
               <text x={roomX + roomWidth / 2} y={roomZ + 26} className="room-label-2d">
-                {room.label}
+                {getRussianRoomLabel(room)}
               </text>
               <text x={roomX + roomWidth / 2} y={roomZ + 48} className="room-area-2d">
-                {getRoomArea(room)} m²
+                {formatArea(getRoomArea(room))} m²
               </text>
 
               {room.items.map((item) => {
@@ -257,40 +370,65 @@ const Planner2D = forwardRef(function Planner2D(
                 const selectedItem = selection?.kind === 'item' && selection.itemId === item.id;
                 const itemX = toCanvasX(room.x + item.x) - rect.width / 2;
                 const itemZ = toCanvasZ(room.z + item.z) - rect.depth / 2;
+                const itemCenterX = itemX + rect.width / 2;
+                const itemCenterY = itemZ + rect.depth / 2;
 
                 return (
-                  <g
-                    key={item.id}
-                    transform={`rotate(${(item.rotation * 180) / Math.PI}, ${itemX + rect.width / 2}, ${itemZ + rect.depth / 2})`}
-                    onPointerDown={(event) => {
-                      event.stopPropagation();
-                      onSelectItem(room.id, item.id);
-                      if (readOnly || item.locked) {
-                        return;
-                      }
-                      const point = fromPointer(event, svgRef.current);
-                      setDragState({
-                        kind: 'item',
-                        roomId: room.id,
-                        itemId: item.id,
-                        offsetX: point.x - room.x - item.x,
-                        offsetZ: point.z - room.z - item.z,
-                      });
-                    }}
-                  >
-                    <rect
-                      x={itemX}
-                      y={itemZ}
-                      width={rect.width}
-                      height={rect.depth}
-                      rx={12}
-                      className={`item-rect ${selectedItem ? 'selected' : ''}`}
-                      fill={item.color}
-                    />
-                    <text x={itemX + rect.width / 2} y={itemZ + rect.depth / 2 + 4} className="item-label-2d">
-                      {CATALOG_BY_ID[item.catalogId]?.label ?? item.label}
-                    </text>
-                    {selectedItem && <rect x={itemX - 4} y={itemZ - 4} width={rect.width + 8} height={rect.depth + 8} rx={16} className="item-outline-2d" />}
+                  <g key={item.id}>
+                    <g
+                      transform={`rotate(${(item.rotation * 180) / Math.PI}, ${itemCenterX}, ${itemCenterY})`}
+                      onPointerDown={(event) => {
+                        event.stopPropagation();
+                        onSelectItem(room.id, item.id);
+                        if (readOnly || item.locked || !selectedItem) {
+                          return;
+                        }
+                        const point = fromPointer(event, svgRef.current);
+                        setDragState({
+                          kind: 'item',
+                          roomId: room.id,
+                          itemId: item.id,
+                          offsetX: point.x - room.x - item.x,
+                          offsetZ: point.z - room.z - item.z,
+                        });
+                      }}
+                    >
+                      <rect
+                        x={itemX}
+                        y={itemZ}
+                        width={rect.width}
+                        height={rect.depth}
+                        rx={12}
+                        className={`item-rect ${selectedItem ? 'selected' : ''}`}
+                        fill={item.color}
+                        data-testid={`planner-item-${item.id}`}
+                      />
+                      <text x={itemCenterX} y={itemCenterY + 4} className="item-label-2d">
+                        {getRussianItemLabel(CATALOG_BY_ID[item.catalogId] ?? item.catalogId)}
+                      </text>
+                      {selectedItem && <rect x={itemX - 4} y={itemZ - 4} width={rect.width + 8} height={rect.depth + 8} rx={16} className="item-outline-2d" />}
+                    </g>
+
+                    {selectedItem && !readOnly && (
+                      <g className="item-nudge-controls" data-testid={`planner-item-nudge-${item.id}`}>
+                        {nudgeDirections.map((direction) => (
+                          <g
+                            key={direction.id}
+                            className="item-nudge-control"
+                            transform={`translate(${itemCenterX + direction.offsetX}, ${itemCenterY + direction.offsetY})`}
+                            aria-label={direction.label}
+                            onPointerDown={(event) => {
+                              event.stopPropagation();
+                              setDragState(null);
+                              onNudgeItem?.(room.id, item.id, direction.dx, direction.dz);
+                            }}
+                          >
+                            <circle r="20" />
+                            <text y="6">{direction.symbol}</text>
+                          </g>
+                        ))}
+                      </g>
+                    )}
                   </g>
                 );
               })}
