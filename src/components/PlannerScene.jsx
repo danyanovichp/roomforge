@@ -1185,7 +1185,11 @@ const PlannerScene = forwardRef(function PlannerScene(
           <meshStandardMaterial color={palette.platform} roughness={0.95} />
         </mesh>
 
+<<<<<<< Updated upstream
         <gridHelper args={[Math.max(planeSize[0], planeSize[1]), Math.max(12, Math.round(Math.max(planeSize[0], planeSize[1]))), palette.grid, palette.grid]} position={[focus[0], 0.02, focus[2]]} />
+=======
+        <gridHelper args={[60, 60, palette.line, palette.grid]} position={[focus[0], -0.07, focus[2]]} />
+>>>>>>> Stashed changes
 
         <mesh
           rotation={[-Math.PI / 2, 0, 0]}

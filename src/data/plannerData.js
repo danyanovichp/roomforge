@@ -24,6 +24,7 @@ export const COLOR_SWATCHES = [
 export const PROPERTY_TYPES = [
   { id: 'apartment', label: 'Apartment' },
   { id: 'house', label: 'House' },
+  { id: 'commercial', label: 'Commercial' },
 ];
 
 export const BUSINESS_PROFILES = [
@@ -1349,6 +1350,74 @@ const TEMPLATE_LIBRARY = [
       ]),
     ],
   },
+  {
+    id: 'vegetable-shop',
+    label: 'Vegetable Shop',
+    propertyType: 'commercial',
+    generator: (options = {}) => {
+      const area = options.area || 48;
+      let width = Math.round(Math.sqrt((area * 4) / 3) * 10) / 10;
+      let depth = Math.round((area / width) * 10) / 10;
+      
+      width = Math.max(width, 4);
+      depth = Math.max(depth, 4);
+      
+      const doors = [{ wall: 'south', offset: width / 2, width: 2 }];
+      const items = [];
+      let shelfId = 1;
+
+      items.push(createPlacedItem({ id: 'shop-counter', catalogId: 'desk', x: width - 1.5, z: depth - 1.5, rotation: Math.PI / 2 }));
+      
+      for (let x = 1.5; x < width - 1.5; x += 1.5) {
+        items.push(createPlacedItem({ id: `shop-shelf-${shelfId++}`, catalogId: 'shelf', x, z: 1 }));
+      }
+      
+      for (let z = 2.5; z < depth - 1.5; z += 1.5) {
+        items.push(createPlacedItem({ id: `shop-shelf-${shelfId++}`, catalogId: 'shelf', x: 1, z, rotation: Math.PI / 2 }));
+      }
+      
+      items.push(createPlacedItem({ id: 'shop-decor', catalogId: 'plant', x: 1, z: depth - 1.5 }));
+      
+      const room = createRoom({
+        id: 'shop-room',
+        floorId: 'floor-1',
+        label: 'Vegetable Shop',
+        roomType: 'commercial',
+        x: 0,
+        z: 0,
+        width,
+        depth,
+        doors,
+        items,
+      });
+
+      return {
+        label: `Vegetable Shop (${Math.round(width * depth)} m²)`,
+        floors: [createFloor('floor-1', 'Shop Floor', 0, [room])],
+      };
+    },
+    floors: [
+      createFloor('floor-1', 'Shop Floor', 0, [
+        createRoom({
+          id: 'shop-room',
+          floorId: 'floor-1',
+          label: 'Vegetable Shop',
+          roomType: 'living-room',
+          x: 0,
+          z: 0,
+          width: 8,
+          depth: 6,
+          items: [
+            createPlacedItem({ id: 'shop-shelf-1', catalogId: 'shelf', x: 1, z: 1 }),
+            createPlacedItem({ id: 'shop-shelf-2', catalogId: 'shelf', x: 2.5, z: 1 }),
+            createPlacedItem({ id: 'shop-shelf-3', catalogId: 'shelf', x: 4, z: 1 }),
+            createPlacedItem({ id: 'shop-counter', catalogId: 'desk', x: 6, z: 4, rotation: Math.PI / 2 }),
+            createPlacedItem({ id: 'shop-decor', catalogId: 'plant', x: 1, z: 4 }),
+          ],
+        }),
+      ]),
+    ],
+  },
 ];
 
 export const TEMPLATES = TEMPLATE_LIBRARY;
@@ -1368,16 +1437,20 @@ function createVariant(id, label, baseTemplate) {
   };
 }
 
-export function getTemplate(templateId) {
-  return TEMPLATES.find((template) => template.id === templateId) ?? TEMPLATES[0];
+export function getTemplate(templateId, options = {}) {
+  const template = TEMPLATES.find((template) => template.id === templateId) ?? TEMPLATES[0];
+  if (template.generator) {
+    return { ...template, ...template.generator(options) };
+  }
+  return template;
 }
 
 export function getTemplatesByPropertyType(propertyType) {
   return TEMPLATES.filter((template) => template.propertyType === propertyType);
 }
 
-export function createProjectFromTemplate(templateId, propertyType = 'apartment') {
-  const template = getTemplate(templateId);
+export function createProjectFromTemplate(templateId, propertyType = 'apartment', options = {}) {
+  const template = getTemplate(templateId, options);
   const actualType = template.propertyType ?? propertyType;
   return {
     id: `project-${template.id}`,
