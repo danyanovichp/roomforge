@@ -661,6 +661,11 @@ export default function App() {
   );
   const [aiError, setAiError] = useState('');
   const [isGeneratingAiLayout, setIsGeneratingAiLayout] = useState(false);
+  const [lang, setLang] = useState(() => {
+    if (typeof window === 'undefined') return 'en';
+    return window.localStorage.getItem('roomforge.lang') ?? 'en';
+  });
+  const [commercialArea, setCommercialArea] = useState(48);
 
   const deferredLibraryQuery = useDeferredValue(libraryQuery.trim().toLowerCase());
   const activeVariant = useMemo(() => getVariant(state.project, state.activeVariantId), [state.project, state.activeVariantId]);
@@ -1200,6 +1205,23 @@ export default function App() {
       ? [AI_TEMPLATE_OPTION, ...housingTemplates.map((template) => ({ value: template.id, label: getRussianTemplateLabel(template) }))]
       : housingTemplates.map((template) => ({ value: template.id, label: getRussianTemplateLabel(template) }));
 
+  if (!lang) {
+    return (
+      <div className="app-shell theme-shell" data-theme={themeMode}>
+        <div style={{ position: 'fixed', inset: 0, background: uiTheme.panelOverlay, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+          <div className="panel" style={{ textAlign: 'center', padding: '3rem', maxWidth: '400px' }}>
+            <h1 style={{ marginBottom: '0.5rem' }}>Choose Language</h1>
+            <h1 style={{ marginBottom: '2rem', color: uiTheme.subtle }}>Выберите язык</h1>
+            <div className="button-row" style={{ justifyContent: 'center', gap: '1rem' }}>
+              <button className="pill active" onClick={() => { setLang('en'); window.localStorage.setItem('roomforge.lang', 'en'); }}>English</button>
+              <button className="pill active" onClick={() => { setLang('ru'); window.localStorage.setItem('roomforge.lang', 'ru'); }}>Русский</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className="app-shell theme-shell"
@@ -1277,13 +1299,24 @@ export default function App() {
                 options={BUSINESS_PROFILES.map((profile) => ({ value: profile.id, label: profile.label }))}
               />
             ) : (
-              <SelectField
-                label="Тип объекта"
-                testId="workspace-property-type-select"
-                value={state.project.propertyType}
-                onChange={handlePropertyTypeChange}
-                options={PROPERTY_TYPES.map((type) => ({ value: type.id, label: getRussianPropertyTypeLabel(type) }))}
-              />
+              <div className="control-stack">
+                <label className="select-field">
+                  <span>Тип объекта</span>
+                  <div className="segment-group">
+                    {PROPERTY_TYPES.map((type) => (
+                      <SegmentButton
+                        key={type.id}
+                        active={state.project.propertyType === type.id}
+                        onClick={() => {
+                          handlePropertyTypeChange(type.id);
+                        }}
+                      >
+                        {getRussianPropertyTypeLabel(type)}
+                      </SegmentButton>
+                    ))}
+                  </div>
+                </label>
+              </div>
             )}
             <SelectField
               label="Шаблон"
@@ -1327,6 +1360,43 @@ export default function App() {
             error={aiError}
           />
         )}
+
+        {state.project.templateId === 'vegetable-shop' && (
+          <div className={`panel ${isMobileLayout && mobileTab === 'library' ? 'mobile-hidden' : ''}`}>
+            <div className="panel-header compact">
+              <span>Shop Area ({commercialArea} m²)</span>
+            </div>
+            <input
+              type="range"
+              min="20"
+              max="150"
+              step="2"
+              value={commercialArea}
+              onChange={(e) => {
+                const newArea = parseInt(e.target.value, 10);
+                setCommercialArea(newArea);
+                setState((current) => setTemplate(current, 'vegetable-shop', 'commercial', { area: newArea }));
+              }}
+              style={{ width: '100%', accentColor: 'var(--accent)', cursor: 'pointer' }}
+            />
+            <p className="muted-copy" style={{ marginTop: '0.5rem', fontSize: '0.8rem' }}>
+              Adjusting area will procedurally regenerate the shop layout.
+            </p>
+          </div>
+        )}
+
+        <div className={`panel ${isMobileLayout && mobileTab === 'library' ? 'mobile-hidden' : ''}`}>
+          <div className="panel-header">
+            <span>Режим просмотра</span>
+          </div>
+          <div className="segment-group">
+            {['2d', 'isometric'].map((mode) => (
+              <SegmentButton key={mode} active={state.activeViewMode === mode} onClick={() => setState((current) => ({ ...current, activeViewMode: mode }))}>
+                {mode === '2d' ? '2D' : 'Изометрия'}
+              </SegmentButton>
+            ))}
+          </div>
+        </div>
 
         <div className="panel compact-panel">
           <div className="panel-header">

@@ -213,6 +213,11 @@ const LIGHTING_LABELS = {
 };
 
 const TEMPLATE_LABELS = {
+  'showroom-boutique': 'Модный шоурум',
+  'market-store': 'Мини-маркет',
+  'shawarma-express': 'Шаурма Экспресс',
+  'cafe-pizzeria': 'Уютное кафе',
+  'vegetable-shop': 'Овощная лавка',
   studio: 'Студия',
   'one-bedroom': '1-комнатная квартира',
   'two-bedroom': '2-комнатная квартира',
@@ -244,6 +249,7 @@ const FLOOR_LABELS = {
 };
 
 const PROPERTY_TYPE_LABELS = {
+  commercial: 'Коммерция',
   apartment: 'Квартира',
   house: 'Дом',
 };

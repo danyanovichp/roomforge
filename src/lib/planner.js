@@ -327,8 +327,8 @@ export function setProjectType(state, propertyType, fallbackTemplateId) {
   };
 }
 
-export function setTemplate(state, templateId, propertyType) {
-  const project = createProjectFromTemplate(templateId, propertyType);
+export function setTemplate(state, templateId, propertyType, options = {}) {
+  const project = createProjectFromTemplate(templateId, propertyType, options);
   return {
     ...state,
     project,
