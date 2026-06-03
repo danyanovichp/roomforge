@@ -628,6 +628,7 @@ export default function App() {
     const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
     return savedTheme === 'light' || savedTheme === 'dark';
   });
+<<<<<<< Updated upstream
   const [wallComposer, setWallComposer] = useState(null);
   const [openingComposer, setOpeningComposer] = useState(null);
   const [libraryQuery, setLibraryQuery] = useState('');
@@ -661,11 +662,6 @@ export default function App() {
   );
   const [aiError, setAiError] = useState('');
   const [isGeneratingAiLayout, setIsGeneratingAiLayout] = useState(false);
-  const [lang, setLang] = useState(() => {
-    if (typeof window === 'undefined') return 'en';
-    return window.localStorage.getItem('roomforge.lang') ?? 'en';
-  });
-  const [commercialArea, setCommercialArea] = useState(48);
 
   const deferredLibraryQuery = useDeferredValue(libraryQuery.trim().toLowerCase());
   const activeVariant = useMemo(() => getVariant(state.project, state.activeVariantId), [state.project, state.activeVariantId]);
@@ -1277,6 +1273,7 @@ export default function App() {
             <span>Сценарий проекта</span>
             <small>{projectSummary.floors} этаж(а)</small>
           </div>
+<<<<<<< Updated upstream
           <div className="theme-toggle-row">
             <button type="button" className={`filter-chip ${planningMode === 'room' ? 'active' : ''}`} onClick={() => setPlanningMode('room')}>
               Для жилья
@@ -1288,6 +1285,22 @@ export default function App() {
             >
               Для бизнеса
             </button>
+=======
+          <div className="segment-group">
+            {PROPERTY_TYPES.map((type) => (
+              <SegmentButton
+                key={type.id}
+                active={state.project.propertyType === type.id}
+                onClick={() =>
+                  setState((current) =>
+                    setTemplate(current, type.id === 'house' ? 'house-80' : type.id === 'commercial' ? 'vegetable-shop' : 'one-bedroom', type.id)
+                  )
+                }
+              >
+                {type.label}
+              </SegmentButton>
+            ))}
+>>>>>>> Stashed changes
           </div>
           <div className="control-stack">
             {planningMode === 'business' ? (
@@ -1345,6 +1358,7 @@ export default function App() {
           </div>
         </div>
 
+<<<<<<< Updated upstream
         {planningMode === 'room' && (
           <AiPlannerPanel
             apiKey={aiApiKey}
@@ -1360,43 +1374,6 @@ export default function App() {
             error={aiError}
           />
         )}
-
-        {state.project.templateId === 'vegetable-shop' && (
-          <div className={`panel ${isMobileLayout && mobileTab === 'library' ? 'mobile-hidden' : ''}`}>
-            <div className="panel-header compact">
-              <span>Shop Area ({commercialArea} m²)</span>
-            </div>
-            <input
-              type="range"
-              min="20"
-              max="150"
-              step="2"
-              value={commercialArea}
-              onChange={(e) => {
-                const newArea = parseInt(e.target.value, 10);
-                setCommercialArea(newArea);
-                setState((current) => setTemplate(current, 'vegetable-shop', 'commercial', { area: newArea }));
-              }}
-              style={{ width: '100%', accentColor: 'var(--accent)', cursor: 'pointer' }}
-            />
-            <p className="muted-copy" style={{ marginTop: '0.5rem', fontSize: '0.8rem' }}>
-              Adjusting area will procedurally regenerate the shop layout.
-            </p>
-          </div>
-        )}
-
-        <div className={`panel ${isMobileLayout && mobileTab === 'library' ? 'mobile-hidden' : ''}`}>
-          <div className="panel-header">
-            <span>Режим просмотра</span>
-          </div>
-          <div className="segment-group">
-            {['2d', 'isometric'].map((mode) => (
-              <SegmentButton key={mode} active={state.activeViewMode === mode} onClick={() => setState((current) => ({ ...current, activeViewMode: mode }))}>
-                {mode === '2d' ? '2D' : 'Изометрия'}
-              </SegmentButton>
-            ))}
-          </div>
-        </div>
 
         <div className="panel compact-panel">
           <div className="panel-header">
